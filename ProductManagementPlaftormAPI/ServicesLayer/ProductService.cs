@@ -1,5 +1,6 @@
 ﻿using ProductManagementPlaftormAPI.DataLayer;
 using ProductManagementPlaftormAPI.Domain.Models;
+using System.Runtime.Intrinsics.X86;
 
 namespace ProductManagementPlaftormAPI.Services
 {
