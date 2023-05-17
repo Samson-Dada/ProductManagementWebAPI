@@ -1,6 +1,40 @@
-﻿namespace ProductManagementPlaftormAPI.Services
+﻿using ProductManagementPlaftormAPI.DataLayer;
+using ProductManagementPlaftormAPI.Domain.Models;
+
+namespace ProductManagementPlaftormAPI.Services
 {
-    public class CategoryService
+    public class CategoryService : ICategoryService
     {
+        private readonly ICategoryRepository _categoryRepository;
+        public CategoryService(ICategoryRepository categoryRepository)
+        {
+            _categoryRepository = categoryRepository;
+        }
+
+        public async Task CreateCategoryAsync(Category category)
+        {
+          await _categoryRepository.CreateAsync(category);
+        }
+
+        public async Task DeleteCategoryByIdAsync(string categoryId)
+        {
+           await _categoryRepository.DeleteAsync(categoryId);
+        }
+
+        public Task<IEnumerable<Category>> GetAllCategoryAsync()
+        {
+            var categories = _categoryRepository.GetAllAsync();
+            return categories;
+        }
+
+        public async Task GetCategoryByIdAsync(string categoryId)
+        {
+           await _categoryRepository.GetByIdAsync(categoryId);
+        }
+
+        public async Task UpdateCategoryAsync(Category category)
+        {
+            await _categoryRepository.UpdateAsync(category);
+        }
     }
 }

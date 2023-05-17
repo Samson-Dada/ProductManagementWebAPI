@@ -21,28 +21,28 @@ namespace ProductManagementPlaftormAPI.DataLayer
 
         }
 
-        public async Task CreateProductAsync(Product product)
+        public async Task CreateAsync(Product product)
         {
            await _productCollection.InsertOneAsync(product);
         }
 
-        public async Task DeleteProductAsync(string productId)
+        public async Task DeleteAsync(string productId)
         {
           await _productCollection.DeleteOneAsync(id => id.Id == productId);
         }
 
-        public async Task<IEnumerable<Product>> GetAllProductAsync()
+        public async Task<IEnumerable<Product>> GetAllAsync()
         {
            var products = await _productCollection.Find(_ => true).ToListAsync();
             return products;
         }
 
-        public async Task GetProductByIdAsync(string productId)
+        public async Task GetByIdAsync(string productId)
         {
            await  _productCollection.Find(id => id.Id == productId).FirstOrDefaultAsync();
         }
 
-        public async Task UpdateProductAsync(Product product)
+        public async Task UpdateAsync(Product product)
         {
            var productId =await  _productCollection.Find(p => p.Id == product.Id).FirstOrDefaultAsync();
             await _productCollection.ReplaceOneAsync(p => p.Id  == productId.Id, product);

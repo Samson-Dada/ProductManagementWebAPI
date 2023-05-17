@@ -4,11 +4,11 @@ namespace ProductManagementPlaftormAPI.DataLayer
 {
     public interface IProductRepository
     {
-        Task<IEnumerable<Product>> GetAllProductAsync();
-        Task GetProductByIdAsync(string productId);
-        Task CreateProductAsync(Product product);
+        Task<IEnumerable<Product>> GetAllAsync();
+        Task GetByIdAsync(string productId);
+        Task CreateAsync(Product product);
 
-        Task UpdateProductAsync(Product product);
+        Task UpdateAsync(Product product);
 
         Task DeleteAsync(string productId);
     }

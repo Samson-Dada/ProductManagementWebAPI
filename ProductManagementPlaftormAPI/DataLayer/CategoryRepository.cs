@@ -31,20 +31,20 @@ namespace ProductManagementPlaftormAPI.DataLayer
           await _categoriesCollection.DeleteOneAsync(c => c.Id == categoryId);
         }
 
-        public async Task<IEnumerable<Category>> GetAllCategoryAsync()
+        public async Task<IEnumerable<Category>> GetAllAsync()
         {
-            var categories  = await  _categoriesCollection.Find(_ =>).ToListAsync();
+            var categories  = await  _categoriesCollection.Find(_ => true).ToListAsync();
             return categories;
         }
 
-        public Task GetProductByIdAsync(string categoryId)
+        public async Task GetByIdAsync(string categoryId)
         {
-            
+           await  _categoriesCollection.Find(c => c.Id == categoryId).FirstOrDefaultAsync();
         }
 
-        public Task UpdateAsync(Category category)
+        public async Task UpdateAsync(Category category)
         {
-            throw new NotImplementedException();
+          await  _categoriesCollection.ReplaceOneAsync(c => c.Id == category.Id, category);
         }
     }
 }
