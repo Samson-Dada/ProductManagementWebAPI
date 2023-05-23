@@ -1,6 +1,6 @@
 ﻿namespace ProductManagementPlaftormAPI.DataLayer
 {
-    public class DatabaseSettings : IDatabaseSettings
+    public class DatabaseSettings: IDatabaseSettings
     {
         public string ConnectionString { get; set; }
         public string CategoryCollectionName { get; set; }

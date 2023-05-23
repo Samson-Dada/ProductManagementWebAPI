@@ -27,9 +27,10 @@ namespace ProductManagementPlaftormAPI.Services
             return categories;
         }
 
-        public async Task GetCategoryByIdAsync(string categoryId)
+        public async Task<Category> GetCategoryByIdAsync(string categoryId)
         {
-           await _categoryRepository.GetByIdAsync(categoryId);
+           var category = await _categoryRepository.GetByIdAsync(categoryId);
+            return category;
         }
 
         public async Task UpdateCategoryAsync(Category category)

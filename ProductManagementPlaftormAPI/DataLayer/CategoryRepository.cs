@@ -9,10 +9,8 @@ namespace ProductManagementPlaftormAPI.DataLayer
         private readonly IOptions<DatabaseSettings> _dbSettings;
         private readonly IMongoCollection<Category> _categoriesCollection;
 
-        public CategoryRepository(IMongoCollection<Category> mongoCollection,
-            IOptions<DatabaseSettings> dbSettings)
+        public CategoryRepository(IOptions<DatabaseSettings> dbSettings)
         {
-            _categoriesCollection = mongoCollection;
             _dbSettings = dbSettings;
 
             var mongoClient = new MongoClient(_dbSettings.Value.ConnectionString);
@@ -37,9 +35,10 @@ namespace ProductManagementPlaftormAPI.DataLayer
             return categories;
         }
 
-        public async Task GetByIdAsync(string categoryId)
+        public async Task<Category> GetByIdAsync(string categoryId)
         {
-           await  _categoriesCollection.Find(c => c.Id == categoryId).FirstOrDefaultAsync();
+            var category = await _categoriesCollection.Find(c => c.Id == categoryId).FirstOrDefaultAsync();
+            return category;
         }
 
         public async Task UpdateAsync(Category category)

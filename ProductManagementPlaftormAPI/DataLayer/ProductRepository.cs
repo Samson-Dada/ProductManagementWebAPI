@@ -6,29 +6,34 @@ namespace ProductManagementPlaftormAPI.DataLayer
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly IOptions<DatabaseSettings> _dbSettings;
         private readonly IMongoCollection<Product> _productCollection;
+        private readonly IOptions<DatabaseSettings> _dbSettings;
 
-
-        public ProductRepository(IOptions<DatabaseSettings> dbSettings, 
-            IMongoCollection<Product> productCollection)
+        public ProductRepository(IOptions<DatabaseSettings> dbSettings )
         {
             _dbSettings = dbSettings;
-            _productCollection = productCollection;
             var mongoClient = new MongoClient(_dbSettings.Value.ConnectionString);
             var mongoDatabase = mongoClient.GetDatabase(_dbSettings.Value.DatabaseName);
             _productCollection = mongoDatabase.GetCollection<Product>(_dbSettings.Value.ProductCollectionName); 
 
         }
 
+        public async Task<bool> Productexists(string productId)
+        {
+            var filter = Builders<Product>.Filter.Eq(p => p.Id, productId );
+                var count = await _productCollection.CountDocumentsAsync(filter);
+            return count > 0;
+        }
+
+
         public async Task CreateAsync(Product product)
         {
            await _productCollection.InsertOneAsync(product);
         }
 
-        public async Task DeleteAsync(string productId)
+        public async Task DeleteAsync(string id)
         {
-          await _productCollection.DeleteOneAsync(id => id.Id == productId);
+            await _productCollection.DeleteOneAsync(p => p.Id == id);
         }
 
         public async Task<IEnumerable<Product>> GetAllAsync()
@@ -37,9 +42,10 @@ namespace ProductManagementPlaftormAPI.DataLayer
             return products;
         }
 
-        public async Task GetByIdAsync(string productId)
+        public async Task<Product> GetByIdAsync(string productId)
         {
-           await  _productCollection.Find(id => id.Id == productId).FirstOrDefaultAsync();
+           var product =  await _productCollection.Find(id => id.Id == productId).FirstOrDefaultAsync();
+            return product;
         }
 
         public async Task UpdateAsync(Product product)

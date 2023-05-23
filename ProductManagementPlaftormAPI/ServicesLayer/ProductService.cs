@@ -1,12 +1,14 @@
-﻿using ProductManagementPlaftormAPI.DataLayer;
+﻿
+using ProductManagementPlaftormAPI.DataLayer;
 using ProductManagementPlaftormAPI.Domain.Models;
-using System.Runtime.Intrinsics.X86;
 
 namespace ProductManagementPlaftormAPI.Services
 {
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
+       
+
         public ProductService(IProductRepository productRepository)
         {
             _productRepository = productRepository;
@@ -18,7 +20,11 @@ namespace ProductManagementPlaftormAPI.Services
 
         public async Task DeleteProductAsync(string productId)
         {
-           await _productRepository.DeleteAsync(productId);
+            var product = await _productRepository.GetByIdAsync(productId);
+            if(product != null)
+            {
+            await _productRepository.DeleteAsync(productId);
+            }
         }
 
         public Task<IEnumerable<Product>> GetAllProductAsync()
@@ -27,14 +33,15 @@ namespace ProductManagementPlaftormAPI.Services
             return products;
         }
 
-        public async Task GetProductByIdAsync(string productId)
+        public async Task<Product> GetProductByIdAsync(string productId)
         {
-          await  _productRepository.GetByIdAsync(productId);
+            var product = await _productRepository.GetByIdAsync(productId);
+            return product;
         }
 
         public async Task UpdateProductAsync(Product product)
         {
-          await _productRepository.UpdateAsync(product);
+                await _productRepository.UpdateAsync(product);
         }
     }
 }

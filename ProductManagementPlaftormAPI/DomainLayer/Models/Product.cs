@@ -9,8 +9,14 @@ namespace ProductManagementPlaftormAPI.Domain.Models
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
+
+        [BsonRequired]
         public string ProductName { get; set; }
+
+        [BsonRequired]
         public decimal Price { get; set; }
+
+        [BsonRequired]
         public string ProductDescription { get; set; }
 
         //[BsonIgnoreIfNull]
