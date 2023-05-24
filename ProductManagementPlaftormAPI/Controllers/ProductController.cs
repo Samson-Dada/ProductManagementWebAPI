@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using ProductManagementPlaftormAPI.DataLayer;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProductManagementPlaftormAPI.Domain.Models;
 using ProductManagementPlaftormAPI.Services;
 
 namespace ProductManagementPlaftormAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
+    [ApiVersion("3.0")]
+    [Route("api/v{version:apiVersion}/products")]
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;

@@ -12,8 +12,7 @@ namespace ProductManagementPlaftormAPI.Domain.Models
 
         [BsonRequired]
         public string CategoryName { get; set; }
-        //public IEnumerable<Product> ProudctList { get; set; }
-
-
+        public IEnumerable<Product> ProudctList { get; set; }
+            = new List<Product>();
     }
 }

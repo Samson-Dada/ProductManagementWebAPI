@@ -4,8 +4,9 @@ using ProductManagementPlaftormAPI.Services;
 
 namespace ProductManagementPlaftormAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [ApiVersion("2.0")]
+    [Route("api/v{version:apiVersion}/categories")]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
